@@ -1,0 +1,35 @@
+class _SignUpScreenState extends State<SignUpScreen> {
+  // ... existing code ...
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: CustomAppBar(title: 'Sign Up'),
+      drawer: AppDrawer(),
+      body: Stack(
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/images/signup_background.jpg'),
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.all(16.0),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  // ... existing form fields ...
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}

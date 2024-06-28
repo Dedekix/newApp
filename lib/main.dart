@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'home_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -11,7 +12,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MainScreen(),
+      home: HomeScreen(),
     );
   }
 }
@@ -122,66 +123,74 @@ class _SignInScreenState extends State<SignInScreen> {
     return Scaffold(
       appBar: CustomAppBar(title: 'Sign In'),
       drawer: AppDrawer(),
-      body: Padding(
-        padding: EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              TextFormField(
-                decoration: InputDecoration(
-                  labelText: 'Username',
-                  border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.person),
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/images/signin_background.png'),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Padding(
+          padding: EdgeInsets.all(16.0),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                TextFormField(
+                  decoration: InputDecoration(
+                    labelText: 'Username',
+                    border: OutlineInputBorder(),
+                    prefixIcon: Icon(Icons.person),
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your username';
+                    }
+                    return null;
+                  },
+                  onSaved: (value) {
+                    _username = value!;
+                  },
                 ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your username';
-                  }
-                  return null;
-                },
-                onSaved: (value) {
-                  _username = value!;
-                },
-              ),
-              SizedBox(height: 16),
-              TextFormField(
-                decoration: InputDecoration(
-                  labelText: 'Password',
-                  border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.lock),
+                SizedBox(height: 16),
+                TextFormField(
+                  decoration: InputDecoration(
+                    labelText: 'Password',
+                    border: OutlineInputBorder(),
+                    prefixIcon: Icon(Icons.lock),
+                  ),
+                  obscureText: true,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your password';
+                    }
+                    return null;
+                  },
+                  onSaved: (value) {
+                    _password = value!;
+                  },
                 ),
-                obscureText: true,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your password';
-                  }
-                  return null;
-                },
-                onSaved: (value) {
-                  _password = value!;
-                },
-              ),
-              SizedBox(height: 24),
-              ElevatedButton(
-                child: Text('Sign In'),
-                onPressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    _formKey.currentState!.save();
-                    // TODO: Implement sign in logic
-                    print('Username: $_username');
-                    print('Password: $_password');
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => CalculatorScreen()),
-                    );
-                    // You would typically send this data to your backend or authentication service
-                  }
-                },
-              ),
-            ],
+                SizedBox(height: 24),
+                ElevatedButton(
+                  child: Text('Sign In'),
+                  onPressed: () {
+                    if (_formKey.currentState!.validate()) {
+                      _formKey.currentState!.save();
+                      // TODO: Implement sign in logic
+                      print('Username: $_username');
+                      print('Password: $_password');
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => CalculatorScreen()),
+                      );
+                      // You would typically send this data to your backend or authentication service
+                    }
+                  },
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -205,88 +214,96 @@ class _SignUpScreenState extends State<SignUpScreen> {
     return Scaffold(
       appBar: CustomAppBar(title: 'Sign Up'),
       drawer: AppDrawer(),
-      body: Padding(
-        padding: EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              TextFormField(
-                decoration: InputDecoration(
-                  labelText: 'Username',
-                  border: OutlineInputBorder(),
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/images/signup_background.jpg'),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Padding(
+          padding: EdgeInsets.all(16.0),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                TextFormField(
+                  decoration: InputDecoration(
+                    labelText: 'Username',
+                    border: OutlineInputBorder(),
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter a username';
+                    }
+                    return null;
+                  },
+                  onSaved: (value) {
+                    _username = value!;
+                  },
                 ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter a username';
-                  }
-                  return null;
-                },
-                onSaved: (value) {
-                  _username = value!;
-                },
-              ),
-              SizedBox(height: 16),
-              TextFormField(
-                decoration: InputDecoration(
-                  labelText: 'Email',
-                  border: OutlineInputBorder(),
+                SizedBox(height: 16),
+                TextFormField(
+                  decoration: InputDecoration(
+                    labelText: 'Email',
+                    border: OutlineInputBorder(),
+                  ),
+                  keyboardType: TextInputType.emailAddress,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter an email';
+                    }
+                    if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
+                        .hasMatch(value)) {
+                      return 'Please enter a valid email';
+                    }
+                    return null;
+                  },
+                  onSaved: (value) {
+                    _email = value!;
+                  },
                 ),
-                keyboardType: TextInputType.emailAddress,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter an email';
-                  }
-                  if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
-                      .hasMatch(value)) {
-                    return 'Please enter a valid email';
-                  }
-                  return null;
-                },
-                onSaved: (value) {
-                  _email = value!;
-                },
-              ),
-              SizedBox(height: 16),
-              TextFormField(
-                decoration: InputDecoration(
-                  labelText: 'Password',
-                  border: OutlineInputBorder(),
+                SizedBox(height: 16),
+                TextFormField(
+                  decoration: InputDecoration(
+                    labelText: 'Password',
+                    border: OutlineInputBorder(),
+                  ),
+                  obscureText: true,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter a password';
+                    }
+                    if (value.length < 6) {
+                      return 'Password must be at least 6 characters long';
+                    }
+                    return null;
+                  },
+                  onSaved: (value) {
+                    _password = value!;
+                  },
                 ),
-                obscureText: true,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter a password';
-                  }
-                  if (value.length < 6) {
-                    return 'Password must be at least 6 characters long';
-                  }
-                  return null;
-                },
-                onSaved: (value) {
-                  _password = value!;
-                },
-              ),
-              SizedBox(height: 24),
-              ElevatedButton(
-                child: Text('Sign Up'),
-                onPressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    _formKey.currentState!.save();
-                    // TODO: Implement sign up logic
-                    print('Username: $_username');
-                    print('Email: $_email');
-                    print('Password: $_password');
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(builder: (context) => SignInScreen()),
-                    );
-                    // You would typically send this data to your backend or authentication service
-                  }
-                },
-              ),
-            ],
+                SizedBox(height: 24),
+                ElevatedButton(
+                  child: Text('Sign Up'),
+                  onPressed: () {
+                    if (_formKey.currentState!.validate()) {
+                      _formKey.currentState!.save();
+                      // TODO: Implement sign up logic
+                      print('Username: $_username');
+                      print('Email: $_email');
+                      print('Password: $_password');
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (context) => SignInScreen()),
+                      );
+                      // You would typically send this data to your backend or authentication service
+                    }
+                  },
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -363,57 +380,80 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: 'Calculator'),
-      drawer: AppDrawer(),
-      body: Column(
-        children: <Widget>[
-          Container(
-            alignment: Alignment.centerRight,
-            padding: EdgeInsets.symmetric(vertical: 24.0, horizontal: 12.0),
-            child: Text(
-              _output,
-              style: TextStyle(fontSize: 48.0, fontWeight: FontWeight.bold),
+      appBar: AppBar(
+        title: Text('Calculator'),
+      ),
+      body: Stack(
+        children: [
+          Positioned.fill(
+            child: Image.asset(
+              'assets/images/calculator_background.png',
+              fit: BoxFit.cover,
             ),
           ),
-          Expanded(
-            child: Divider(),
-          ),
           Column(
-            children: [
-              Row(children: [
-                _buildButton('7'),
-                _buildButton('8'),
-                _buildButton('9'),
-                _buildButton('/')
-              ]),
-              Row(children: [
-                _buildButton('4'),
-                _buildButton('5'),
-                _buildButton('6'),
-                _buildButton('x')
-              ]),
-              Row(children: [
-                _buildButton('1'),
-                _buildButton('2'),
-                _buildButton('3'),
-                _buildButton('-')
-              ]),
-              Row(children: [
-                _buildButton('.'),
-                _buildButton('0'),
-                _buildButton('00'),
-                _buildButton('+')
-              ]),
-              Row(children: [_buildButton('C'), _buildButton('=')]),
+            children: <Widget>[
+              Container(
+                alignment: Alignment.centerRight,
+                padding: EdgeInsets.symmetric(vertical: 24.0, horizontal: 12.0),
+                child: Text(
+                  _output,
+                  style: TextStyle(fontSize: 48.0, fontWeight: FontWeight.bold),
+                ),
+              ),
+              Expanded(
+                child: Divider(),
+              ),
+              Column(
+                children: [
+                  Row(
+                    children: [
+                      _buildButton("7"),
+                      _buildButton("8"),
+                      _buildButton("9"),
+                      _buildButton("/"),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      _buildButton("4"),
+                      _buildButton("5"),
+                      _buildButton("6"),
+                      _buildButton("x"),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      _buildButton("1"),
+                      _buildButton("2"),
+                      _buildButton("3"),
+                      _buildButton("-"),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      _buildButton("."),
+                      _buildButton("0"),
+                      _buildButton("00"),
+                      _buildButton("+"),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      _buildButton("C"),
+                      _buildButton("="),
+                    ],
+                  ),
+                ],
+              ),
             ],
           ),
-          SizedBox(height: 20),
-          SizedBox(height: 20),
         ],
       ),
     );
   }
 }
+
 
 class AppDrawer extends StatelessWidget {
   @override
@@ -435,38 +475,17 @@ class AppDrawer extends StatelessWidget {
             ),
           ),
           ListTile(
-            leading: Icon(Icons.login),
-            title: Text('Sign In'),
+            leading: Icon(Icons.home),
+            title: Text('Home'),
             onTap: () {
-              Navigator.pop(context); // Close the drawer
+              Navigator.pop(context);
               Navigator.pushReplacement(
                 context,
-                MaterialPageRoute(builder: (context) => SignInScreen()),
+                MaterialPageRoute(builder: (context) => HomeScreen()),
               );
             },
           ),
-          ListTile(
-            leading: Icon(Icons.person_add),
-            title: Text('Sign Up'),
-            onTap: () {
-              Navigator.pop(context); // Close the drawer
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (context) => SignUpScreen()),
-              );
-            },
-          ),
-          ListTile(
-            leading: Icon(Icons.calculate),
-            title: Text('Calculator'),
-            onTap: () {
-              Navigator.pop(context); // Close the drawer
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (context) => CalculatorScreen()),
-              );
-            },
-          ),
+          // ... other ListTile widgets ...
         ],
       ),
     );
