@@ -217,7 +217,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/images/signup_background.jpg'),
+            image: AssetImage('assets/images/signup_background.png'),
             fit: BoxFit.cover,
           ),
         ),
@@ -453,7 +453,6 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
     );
   }
 }
-
 
 class AppDrawer extends StatelessWidget {
   @override
